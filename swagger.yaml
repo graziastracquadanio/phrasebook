@@ -106,6 +106,28 @@ paths:
         500:
           $ref: "#/components/responses/500InternalServerError"
 
+    delete:
+      summary: Delete specific user
+      description: Delete a specific user by their user ID.
+      operationId: deleteUser
+      tags: [User]
+      security: []
+      responses:
+        200:
+          description: User deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User deleted successfully.
+        404:
+          $ref: "#/components/responses/404UserErrorResponse"
+        500:
+          $ref: "#/components/responses/500InternalServerError"
+
 components:
   schemas:
     SimpleUser:
