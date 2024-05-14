@@ -1,0 +1,89 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Phrase book API specifications
+  contact:
+    email: graziastracquadanio@gmail.com
+  description: |
+    The Phrase Book app is a web-based application that enables users to access a custom phrasebook, 
+    containing phrases they have created.
+servers:
+  - url: https://example.com/v1
+tags:
+  - name: User
+    description: This section contains all of the APIs for managing users.
+  - name: Phrase
+    description: This section contains all of the APIs for managing phrases.
+  - name: Collection
+    description: This section contains all of the APIs for managing collections.
+paths:
+  /users:
+    post:
+      summary: Creates a new users.
+      operationId: createUser
+      description: This API is used to create a new user.
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SimpleUser"
+              password:
+                description: The user's plain text password.
+                type: string
+                minLenght: 5
+                example: h0kusp0kus
+      responses:
+        200:
+          description: User created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        400:
+          description: |-
+            The request was invalid and/or malformed.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    SimpleUser:
+      type: object
+      properties:
+        username:
+          description: User supplied username
+          type: string
+          minLength: 5
+          example: HarryPotter
+        email:
+          description: User email address
+          type: string
+          format: email
+          minLength: 5
+          example: harrypotter@hogwarts.com
+    User:
+      allOf:
+        - $ref: "#/components/schemas/SimpleUser"
+        - type: object
+          properties:
+            id:
+              description: The user's unique Id.
+              type: string
+              example: 1234
+            token:
+              description: The access token, this string is an encoded JSON Web Token (JWT).
+              type: string
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+          description: This is the same as the HTTP status of the response.
+        code:
+          type: string
+          description: A status code that indicates the error type.
+        message:
+          type: string
+          description: A short description of the error.
