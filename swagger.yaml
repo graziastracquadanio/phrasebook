@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.1.0
 info:
   version: 1.0.0
   title: Phrase book API specifications
@@ -8,7 +8,7 @@ info:
     The Phrase Book app is a web-based application that enables users to access a custom phrasebook, 
     containing phrases they have created.
 servers:
-  - url: https://example.com/v1
+  - url: https://example.com/v1/api
 tags:
   - name: User
     description: This section contains all of the APIs for managing users.
@@ -22,6 +22,8 @@ paths:
       summary: Creates a new users.
       operationId: createUser
       description: This API is used to create a new user.
+      tags:
+        - Users
       security: []
       requestBody:
         content:
@@ -31,8 +33,6 @@ paths:
               password:
                 description: The user's plain text password.
                 type: string
-                minLenght: 5
-                example: h0kusp0kus
       responses:
         200:
           description: User created successfully.
@@ -47,22 +47,47 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /users/{id}:
+    summary: Set of methods to manage the user.
+    parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the user whose information is being requested.
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get specific user details.
+      description: Retrieves detailed information about a specific user.
+      operationId: getUser
+      tags:
+        - User
+      security: []
+      responses:
+        200:
+          description: Returns the user information in JSON format.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        404:
+          description: User with the specified ID does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 components:
   schemas:
     SimpleUser:
       type: object
       properties:
         username:
-          description: User supplied username
+          description: The user supplied username
           type: string
-          minLength: 5
-          example: HarryPotter
         email:
-          description: User email address
+          description: The user's email address
           type: string
           format: email
-          minLength: 5
-          example: harrypotter@hogwarts.com
     User:
       allOf:
         - $ref: "#/components/schemas/SimpleUser"
@@ -71,7 +96,6 @@ components:
             id:
               description: The user's unique Id.
               type: string
-              example: 1234
             token:
               description: The access token, this string is an encoded JSON Web Token (JWT).
               type: string

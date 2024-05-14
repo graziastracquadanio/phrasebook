@@ -1,0 +1,6 @@
+apis:
+  core@v1:
+    root: swagger.yaml
+    extends: [recommended]
+    rules:
+      info-license: off
