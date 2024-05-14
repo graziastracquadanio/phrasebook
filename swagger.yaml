@@ -22,17 +22,20 @@ paths:
       summary: Creates a new users.
       operationId: createUser
       description: This API is used to create a new user.
-      tags:
-        - Users
+      tags: [User]
       security: []
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SimpleUser"
-              password:
-                description: The user's plain text password.
-                type: string
+              allOf:
+                - $ref: "#/components/schemas/SimpleUser"
+                - type: object
+                  properties:
+                    password:
+                      description: The user's plain text password.
+                      type: string
       responses:
         200:
           description: User created successfully.
@@ -47,8 +50,11 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+        500:
+          $ref: "#/components/responses/500InternalServerError"
+
   /users/{id}:
-    summary: Set of methods to manage the user.
+    summary: Api to manage the user information.
     parameters:
       - name: id
         in: path
@@ -60,8 +66,7 @@ paths:
       summary: Get specific user details.
       description: Retrieves detailed information about a specific user.
       operationId: getUser
-      tags:
-        - User
+      tags: [User]
       security: []
       responses:
         200:
@@ -71,11 +76,36 @@ paths:
               schema:
                 $ref: "#/components/schemas/User"
         404:
-          description: User with the specified ID does not exist.
+          $ref: "#/components/responses/404UserErrorResponse"
+        500:
+          $ref: "#/components/responses/500InternalServerError"
+
+    put:
+      summary: Update specific user details.
+      description: Update the details of an existing user.
+      operationId: updateUser
+      tags: [User]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SimpleUser"
+      responses:
+        200:
+          description: User details updated successfully.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/User"
+        400:
+          $ref: "#/components/responses/400ErrorResponse"
+        404:
+          $ref: "#/components/responses/404UserErrorResponse"
+        500:
+          $ref: "#/components/responses/500InternalServerError"
+
 components:
   schemas:
     SimpleUser:
@@ -111,3 +141,22 @@ components:
         message:
           type: string
           description: A short description of the error.
+  responses:
+    400ErrorResponse:
+      description: Bad request. Invalid input parameters.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    404UserErrorResponse:
+      description: User not found.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    500InternalServerError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
