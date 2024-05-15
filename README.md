@@ -1,6 +1,7 @@
-# Phrase Book App
+# Phrasebook App
 
-The Phrase Book app is a web-based application that enables users to access a custom phrasebook, containing phrases they have created.
+The Phrasebook app is a web-based application that enables users to access a custom phrasebook, containing phrases they have created.
+
 
 
 ## Resources
@@ -32,6 +33,8 @@ The collection:
 
 - is added by the user
 - contains one or more phrases
+
+
 
 ## Simple user stories
 
@@ -70,3 +73,9 @@ I want to be able to consult the list of phrases,
 so that I can review it.
 
 
+
+## Wireframe
+
+![](images/wireframe.svg "App wireframe")
+
+The wireframe is available at [this link](https://app.moqups.com/YkcYUsHk3mhA7adK89hhK4qbxHpu5Tor/view/page/a880590a1?ui=0).

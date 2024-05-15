@@ -1,11 +1,11 @@
-openapi: 3.1.0
+openapi: 3.0.0
 info:
   version: 1.0.0
-  title: Phrase book API specifications
+  title: Phrasebook API specifications
   contact:
     email: graziastracquadanio@gmail.com
   description: |
-    The Phrase Book app is a web-based application that enables users to access a custom phrasebook, 
+    The Phrasebook app is a web-based application that enables users to access a custom phrasebook, 
     containing phrases they have created.
 servers:
   - url: https://example.com/v1/api
@@ -116,6 +116,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
+        401:
+          $ref: "#/components/responses/401SessionExpiredError"
         404:
           $ref: "#/components/responses/404UserErrorResponse"
         500:
@@ -142,6 +144,8 @@ paths:
                 $ref: "#/components/schemas/User"
         400:
           $ref: "#/components/responses/400ErrorResponse"
+        401:
+          $ref: "#/components/responses/401SessionExpiredError"
         404:
           $ref: "#/components/responses/404UserErrorResponse"
         500:
@@ -164,6 +168,8 @@ paths:
                   message:
                     type: string
                     example: User deleted successfully.
+        401:
+          $ref: "#/components/responses/401SessionExpiredError"
         404:
           $ref: "#/components/responses/404UserErrorResponse"
         500:
@@ -194,7 +200,7 @@ components:
       properties:
         status:
           type: string
-          description: This is the same as the HTTP status of the response.
+          description: The HTTP status of the response.
         code:
           type: string
           description: A status code that indicates the error type.
@@ -208,6 +214,16 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/Error"
+    401SessionExpiredError:
+      description: Session expired. The user needs to re-authenticate.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            status: "401"
+            code: "SESSION_EXPIRED"
+            message: "Your session has expired. Please log in again."
     404UserErrorResponse:
       description: User not found.
       content:
