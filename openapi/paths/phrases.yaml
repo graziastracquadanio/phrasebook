@@ -20,3 +20,25 @@ post:
       $ref: ../components/responses/400BadRequestError.yaml
     401:
       $ref: ../components/responses/401SessionExpiredError.yaml
+    500:
+      $ref: ../components/responses/500InternalServerError.yaml
+
+get:
+  summary: Get all phrases
+  description: Retrieve the full list of phrases defined in the user's phrasebook.
+  operationId: getPhrases
+  tags: [Phrases]
+  security: []
+  responses:
+    200:
+      description: The list of phrases.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Phrase.yaml
+    401:
+      $ref: ../components/responses/401SessionExpiredError.yaml
+    500:
+      $ref: ../components/responses/500InternalServerError.yaml

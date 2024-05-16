@@ -16,8 +16,6 @@ tags:
     description: This section contains all of the APIs for managing users.
   - name: Phrase
     description: This section contains all of the APIs for managing phrases.
-  - name: Collection
-    description: This section contains all of the APIs for managing collections.
 paths:
   /signup:
     $ref: paths/signup.yaml
@@ -27,3 +25,5 @@ paths:
     $ref: paths/users_{id}.yaml
   /phrases:
     $ref: paths/phrases.yaml
+  /phrases/{id}:
+    $ref: paths/phrases_{id}.yaml

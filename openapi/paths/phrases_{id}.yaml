@@ -1,0 +1,75 @@
+parameters:
+  - name: id
+    in: path
+    description: The unique identifier of the phrases.
+    required: true
+    schema:
+      type: string
+get:
+  summary: Get a specific phrases
+  description: Retrieve a specific phrase by its Id.
+  operationId: getPhrase
+  tags: [Phrase]
+  security: []
+  responses:
+    200:
+      description: A specific phrase.
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Phrase.yaml
+    401:
+      $ref: ../components/responses/401SessionExpiredError.yaml
+    404:
+      $ref: ../components/responses/404NotFoundError.yaml
+    500:
+      $ref: ../components/responses/500InternalServerError.yaml
+put:
+  summary: Update a specific phrase
+  description: Update the details of a specific phrase
+  operationId: updatePhrase
+  tags: [Phrase]
+  security: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/NewPhrase.yaml
+  responses:
+    200:
+      description: Phrase updated successfully.
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Phrase.yaml
+    400:
+      $ref: ../components/responses/400BadRequestError.yaml
+    401:
+      $ref: ../components/responses/401SessionExpiredError.yaml
+    404:
+      $ref: ../components/responses/404NotFoundError.yaml
+    500:
+      $ref: ../components/responses/500InternalServerError.yaml
+delete:
+  summary: Delete a specific phrase
+  description: Delete a specific phrase by its Id.
+  operationId: deletePhrase
+  tags: [Phrase]
+  security: []
+  responses:
+    200:
+      description: Phrase deleted successfully.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+    401:
+      $ref: ../components/responses/401SessionExpiredError.yaml
+    404:
+      $ref: ../components/responses/404NotFoundError.yaml
+    500:
+      $ref: ../components/responses/500InternalServerError.yaml

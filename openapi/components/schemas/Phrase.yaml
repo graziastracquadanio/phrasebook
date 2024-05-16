@@ -7,11 +7,9 @@ allOf:
         type: number
       createdAt:
         description: Date in UTC when the phrase was created.
-        schema:
-          type: string
-          format: date-time
+        type: string
+        format: date-time
       modifiedAt:
         description: Date in UTC when the phrase was last modified.
-        schema:
-          type: string
-          format: date-time
+        type: string
+        format: date-time

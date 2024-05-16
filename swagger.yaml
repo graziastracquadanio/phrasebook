@@ -14,8 +14,6 @@ tags:
     description: This section contains all of the APIs for managing users.
   - name: Phrase
     description: This section contains all of the APIs for managing phrases.
-  - name: Collection
-    description: This section contains all of the APIs for managing collections.
 paths:
   /signup:
     post:
@@ -48,11 +46,7 @@ paths:
                   user:
                     $ref: '#/components/schemas/User'
         '400':
-          description: The request was invalid and/or malformed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/400BadRequestError'
         '500':
           $ref: '#/components/responses/500InternalServerError'
   /login:
@@ -93,7 +87,7 @@ paths:
                   user:
                     $ref: '#/components/schemas/User'
         '404':
-          $ref: '#/components/responses/404UserErrorResponse'
+          $ref: '#/components/responses/404NotFoundError'
         '500':
           $ref: '#/components/responses/500InternalServerError'
   /users/{id}:
@@ -113,7 +107,7 @@ paths:
       security: []
       responses:
         '200':
-          description: Returns the user information in JSON format.
+          description: The user information.
           content:
             application/json:
               schema:
@@ -121,15 +115,14 @@ paths:
         '401':
           $ref: '#/components/responses/401SessionExpiredError'
         '404':
-          $ref: '#/components/responses/404UserErrorResponse'
+          $ref: '#/components/responses/404NotFoundError'
         '500':
           $ref: '#/components/responses/500InternalServerError'
     put:
       summary: Update specific user details
       description: Update the details of an existing user.
       operationId: updateUser
-      tags:
-        - User
+      tags: []
       security: []
       requestBody:
         required: true
@@ -149,7 +142,7 @@ paths:
         '401':
           $ref: '#/components/responses/401SessionExpiredError'
         '404':
-          $ref: '#/components/responses/404UserErrorResponse'
+          $ref: '#/components/responses/404NotFoundError'
         '500':
           $ref: '#/components/responses/500InternalServerError'
     delete:
@@ -169,11 +162,10 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: User deleted successfully.
         '401':
           $ref: '#/components/responses/401SessionExpiredError'
         '404':
-          $ref: '#/components/responses/404UserErrorResponse'
+          $ref: '#/components/responses/404NotFoundError'
         '500':
           $ref: '#/components/responses/500InternalServerError'
   /phrases:
@@ -200,6 +192,107 @@ paths:
           $ref: '#/components/responses/400BadRequestError'
         '401':
           $ref: '#/components/responses/401SessionExpiredError'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+    get:
+      summary: Get all phrases
+      description: Retrieve the full list of phrases defined in the user's phrasebook.
+      operationId: getPhrases
+      tags:
+        - Phrases
+      security: []
+      responses:
+        '200':
+          description: The list of phrases.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Phrase'
+        '401':
+          $ref: '#/components/responses/401SessionExpiredError'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+  /phrases/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the phrases.
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get a specific phrases
+      description: Retrieve a specific phrase by its Id.
+      operationId: getPhrase
+      tags:
+        - Phrase
+      security: []
+      responses:
+        '200':
+          description: A specific phrase.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Phrase'
+        '401':
+          $ref: '#/components/responses/401SessionExpiredError'
+        '404':
+          $ref: '#/components/responses/404NotFoundError'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+    put:
+      summary: Update a specific phrase
+      description: Update the details of a specific phrase
+      operationId: updatePhrase
+      tags:
+        - Phrase
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewPhrase'
+      responses:
+        '200':
+          description: Phrase updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Phrase'
+        '400':
+          $ref: '#/components/responses/400BadRequestError'
+        '401':
+          $ref: '#/components/responses/401SessionExpiredError'
+        '404':
+          $ref: '#/components/responses/404NotFoundError'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+    delete:
+      summary: Delete a specific phrase
+      description: Delete a specific phrase by its Id.
+      operationId: deletePhrase
+      tags:
+        - Phrase
+      security: []
+      responses:
+        '200':
+          description: Phrase deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          $ref: '#/components/responses/401SessionExpiredError'
+        '404':
+          $ref: '#/components/responses/404NotFoundError'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
 components:
   schemas:
     NewUser:
@@ -257,23 +350,27 @@ components:
               type: number
             createdAt:
               description: Date in UTC when the phrase was created.
-              schema:
-                type: string
-                format: date-time
+              type: string
+              format: date-time
             modifiedAt:
               description: Date in UTC when the phrase was last modified.
-              schema:
-                type: string
-                format: date-time
+              type: string
+              format: date-time
   responses:
+    400BadRequestError:
+      description: Bad request. Invalid input parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     500InternalServerError:
       description: Internal server error.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    404UserErrorResponse:
-      description: User not found.
+    404NotFoundError:
+      description: Not found. The specified resource was not found.
       content:
         application/json:
           schema:
@@ -288,9 +385,3 @@ components:
             status: '401'
             code: SESSION_EXPIRED
             message: Your session has expired. Please log in again.
-    400BadRequestError:
-      description: Bad request. Invalid input parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
