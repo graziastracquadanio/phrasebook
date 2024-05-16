@@ -3,6 +3,9 @@
 The Phrasebook app is a web-based application that enables users to access a custom phrasebook, containing phrases they have created.
 
 
+## API documentation
+
+The API documentation is available at [this link](https://graziastracquadanio.github.io/phrasebook/openapi/dist/).
 
 ## Resources
 
@@ -13,26 +16,26 @@ The user of the app owns the phrasebook and has exclusive access to it. The user
 The user:
 
 - creates phrases
-- creates collections and add phrases to them
+~~- creates collections and add phrases to them~~ (v.2)
 
 ### Phrase
 
-The phrase is a sentence of any length, accompanied by a note. It can be part of one or multiple collections.
+The phrase is a sentence of any length, accompanied by a note. ~~It can be part of one or multiple collections.~~ (v.2)
 
 The phrase:
 
-- can be added, edited or deleted by the user
-- can be added or removed in a collection by the user
-- have a body and other details, like a note
+- can be added, edited or deleted by the user,
+- ~~can be added or removed in a collection by the user,~~
+- have a text body and other details, like a note.
 
 ### Collection
 
-A collection is a group of phrases that share a common theme or purpose based on the user's criteria.
+~~A collection is a group of phrases that share a common theme or purpose based on the user's criteria.~~ (v.2)
 
 The collection:
 
-- is added by the user
-- contains one or more phrases
+- is added by the user,
+- contains one or more phrases.
 
 
 
@@ -40,9 +43,9 @@ The collection:
 
 ### Terms (entities)
 
-- **User** : the person who uses the app
-- **Phrase** : a sentence, accompanied by other *details* (tbd)
-- **Collection** : a group of phrases
+- **User** : the person who uses the app.
+- **Phrase** : a sentence, accompanied by other *details* (tbd).
+- **Collection** : a group of phrases.
 
 
 ### Epic
