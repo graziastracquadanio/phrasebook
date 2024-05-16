@@ -1,0 +1,79 @@
+parameters:
+  - name: id
+    in: path
+    description: The unique identifier of the user whose information is being requested.
+    required: true
+    schema:
+      type: string
+get:
+  summary: Get specific user details
+  description: Retrieves detailed information about a specific user.
+  operationId: getUser
+  tags:
+    - User
+  security: []
+  responses:
+    "200":
+      description: Returns the user information in JSON format.
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/User.yaml
+    "401":
+      $ref: ../components/responses/401SessionExpiredError.yaml
+    "404":
+      $ref: ../components/responses/404UserErrorResponse.yaml
+    "500":
+      $ref: ../components/responses/500InternalServerError.yaml
+put:
+  summary: Update specific user details
+  description: Update the details of an existing user.
+  operationId: updateUser
+  tags:
+    - User
+  security: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/NewUser.yaml
+  responses:
+    "200":
+      description: User details updated successfully
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/User.yaml
+    "400":
+      $ref: ../components/responses/400BadRequestError.yaml
+    "401":
+      $ref: ../components/responses/401SessionExpiredError.yaml
+    "404":
+      $ref: ../components/responses/404UserErrorResponse.yaml
+    "500":
+      $ref: ../components/responses/500InternalServerError.yaml
+delete:
+  summary: Delete specific user
+  description: Delete a specific user by their user ID.
+  operationId: deleteUser
+  tags:
+    - User
+  security: []
+  responses:
+    "200":
+      description: User deleted successfully.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: User deleted successfully.
+    "401":
+      $ref: ../components/responses/401SessionExpiredError.yaml
+    "404":
+      $ref: ../components/responses/404UserErrorResponse.yaml
+    "500":
+      $ref: ../components/responses/500InternalServerError.yaml

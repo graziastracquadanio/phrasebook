@@ -1,0 +1,44 @@
+post:
+  summary: User login
+  description: >-
+    Authenticate user using their username and password. If successful it
+    provides user information and a JWT token.
+  operationId: login
+  tags:
+    - User
+  security: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            username:
+              description: The user supplied username
+              type: string
+            password:
+              description: The user's plain text password.
+              type: string
+          required:
+            - username
+            - password
+  responses:
+    '200':
+      description: Login successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              token:
+                description: >-
+                  The access token, this string is an encoded JSON Web Token
+                  (JWT).
+                type: string
+              user:
+                $ref: ../components/schemas/User.yaml
+    '404':
+      $ref: ../components/responses/404UserErrorResponse.yaml
+    '500':
+      $ref: ../components/responses/500InternalServerError.yaml

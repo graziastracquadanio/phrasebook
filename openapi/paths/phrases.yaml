@@ -1,0 +1,22 @@
+post:
+  summary: Create a new phrase
+  description: Adds a new phrase to the phrasebook.
+  operationId: createPhrase
+  tags: [Phrase]
+  security: []
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/NewPhrase.yaml
+  responses:
+    201:
+      description: Phrase created successfully.
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Phrase.yaml
+    400:
+      $ref: ../components/responses/400BadRequestError.yaml
+    401:
+      $ref: ../components/responses/401SessionExpiredError.yaml

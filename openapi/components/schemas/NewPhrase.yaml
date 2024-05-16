@@ -1,0 +1,14 @@
+type: object
+properties:
+  text:
+    description: The text of the phrase.
+    type: string
+  translation:
+    description: The translation of the phrase.
+    type: string
+  notes:
+    description: Additional notes attached to the phrase.
+    type: string
+  ownerId:
+    description: The id of the user who created the phrase.
+    type: string

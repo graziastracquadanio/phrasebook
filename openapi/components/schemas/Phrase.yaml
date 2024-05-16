@@ -1,0 +1,17 @@
+allOf:
+  - $ref: "./NewPhrase.yaml"
+  - type: object
+    properties:
+      id:
+        description: The unique identifier for each phrase.
+        type: number
+      createdAt:
+        description: Date in UTC when the phrase was created.
+        schema:
+          type: string
+          format: date-time
+      modifiedAt:
+        description: Date in UTC when the phrase was last modified.
+        schema:
+          type: string
+          format: date-time

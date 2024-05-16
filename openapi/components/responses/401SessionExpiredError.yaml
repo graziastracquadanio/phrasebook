@@ -1,0 +1,9 @@
+description: Session expired. The user needs to re-authenticate.
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Error.yaml
+    example:
+      status: '401'
+      code: SESSION_EXPIRED
+      message: Your session has expired. Please log in again.

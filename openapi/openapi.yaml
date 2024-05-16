@@ -1,0 +1,29 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Phrasebook API specifications
+  contact:
+    email: graziastracquadanio@gmail.com
+  description: >
+    The Phrasebook app is a web-based application that enables users to access a
+    custom phrasebook, 
+
+    containing phrases they have created.
+servers:
+  - url: https://example.com/v1/api
+tags:
+  - name: User
+    description: This section contains all of the APIs for managing users.
+  - name: Phrase
+    description: This section contains all of the APIs for managing phrases.
+  - name: Collection
+    description: This section contains all of the APIs for managing collections.
+paths:
+  /signup:
+    $ref: paths/signup.yaml
+  /login:
+    $ref: paths/login.yaml
+  /users/{id}:
+    $ref: paths/users_{id}.yaml
+  /phrases:
+    $ref: paths/phrases.yaml

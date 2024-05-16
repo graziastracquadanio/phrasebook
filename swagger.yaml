@@ -22,7 +22,8 @@ paths:
       summary: Creates a new user
       description: This API is used to create a new user.
       operationId: signup
-      tags: [User]
+      tags:
+        - User
       security: []
       requestBody:
         required: true
@@ -30,14 +31,14 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: "#/components/schemas/SimpleUser"
+                - $ref: '#/components/schemas/NewUser'
                 - type: object
                   properties:
                     password:
                       description: The user's plain text password.
                       type: string
       responses:
-        201:
+        '201':
           description: User created successfully.
           content:
             application/json:
@@ -45,23 +46,22 @@ paths:
                 type: object
                 properties:
                   user:
-                    $ref: "#/components/schemas/User"
-        400:
-          description: |-
-            The request was invalid and/or malformed.
+                    $ref: '#/components/schemas/User'
+        '400':
+          description: The request was invalid and/or malformed.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-        500:
-          $ref: "#/components/responses/500InternalServerError"
-
+                $ref: '#/components/schemas/Error'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
   /login:
     post:
       summary: User login
       description: Authenticate user using their username and password. If successful it provides user information and a JWT token.
       operationId: login
-      tags: [User]
+      tags:
+        - User
       security: []
       requestBody:
         required: true
@@ -76,9 +76,11 @@ paths:
                 password:
                   description: The user's plain text password.
                   type: string
-              required: [username, password]
+              required:
+                - username
+                - password
       responses:
-        200:
+        '200':
           description: Login successful.
           content:
             application/json:
@@ -89,12 +91,11 @@ paths:
                     description: The access token, this string is an encoded JSON Web Token (JWT).
                     type: string
                   user:
-                    $ref: "#/components/schemas/User"
-        404:
-          $ref: "#/components/responses/404UserErrorResponse"
-        500:
-          $ref: "#/components/responses/500InternalServerError"
-
+                    $ref: '#/components/schemas/User'
+        '404':
+          $ref: '#/components/responses/404UserErrorResponse'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
   /users/{id}:
     parameters:
       - name: id
@@ -107,58 +108,59 @@ paths:
       summary: Get specific user details
       description: Retrieves detailed information about a specific user.
       operationId: getUser
-      tags: [User]
+      tags:
+        - User
       security: []
       responses:
-        200:
+        '200':
           description: Returns the user information in JSON format.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
-        401:
-          $ref: "#/components/responses/401SessionExpiredError"
-        404:
-          $ref: "#/components/responses/404UserErrorResponse"
-        500:
-          $ref: "#/components/responses/500InternalServerError"
-
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/401SessionExpiredError'
+        '404':
+          $ref: '#/components/responses/404UserErrorResponse'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     put:
       summary: Update specific user details
       description: Update the details of an existing user.
       operationId: updateUser
-      tags: [User]
+      tags:
+        - User
       security: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SimpleUser"
+              $ref: '#/components/schemas/NewUser'
       responses:
-        200:
+        '200':
           description: User details updated successfully
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
-        400:
-          $ref: "#/components/responses/400ErrorResponse"
-        401:
-          $ref: "#/components/responses/401SessionExpiredError"
-        404:
-          $ref: "#/components/responses/404UserErrorResponse"
-        500:
-          $ref: "#/components/responses/500InternalServerError"
-
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/400BadRequestError'
+        '401':
+          $ref: '#/components/responses/401SessionExpiredError'
+        '404':
+          $ref: '#/components/responses/404UserErrorResponse'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     delete:
       summary: Delete specific user
       description: Delete a specific user by their user ID.
       operationId: deleteUser
-      tags: [User]
+      tags:
+        - User
       security: []
       responses:
-        200:
+        '200':
           description: User deleted successfully.
           content:
             application/json:
@@ -168,16 +170,39 @@ paths:
                   message:
                     type: string
                     example: User deleted successfully.
-        401:
-          $ref: "#/components/responses/401SessionExpiredError"
-        404:
-          $ref: "#/components/responses/404UserErrorResponse"
-        500:
-          $ref: "#/components/responses/500InternalServerError"
-
+        '401':
+          $ref: '#/components/responses/401SessionExpiredError'
+        '404':
+          $ref: '#/components/responses/404UserErrorResponse'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+  /phrases:
+    post:
+      summary: Create a new phrase
+      description: Adds a new phrase to the phrasebook.
+      operationId: createPhrase
+      tags:
+        - Phrase
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewPhrase'
+      responses:
+        '201':
+          description: Phrase created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Phrase'
+        '400':
+          $ref: '#/components/responses/400BadRequestError'
+        '401':
+          $ref: '#/components/responses/401SessionExpiredError'
 components:
   schemas:
-    SimpleUser:
+    NewUser:
       type: object
       properties:
         username:
@@ -189,7 +214,7 @@ components:
           format: email
     User:
       allOf:
-        - $ref: "#/components/schemas/SimpleUser"
+        - $ref: '#/components/schemas/NewUser'
         - type: object
           properties:
             id:
@@ -207,32 +232,65 @@ components:
         message:
           type: string
           description: A short description of the error.
+    NewPhrase:
+      type: object
+      properties:
+        text:
+          description: The text of the phrase.
+          type: string
+        translation:
+          description: The translation of the phrase.
+          type: string
+        notes:
+          description: Additional notes attached to the phrase.
+          type: string
+        ownerId:
+          description: The id of the user who created the phrase.
+          type: string
+    Phrase:
+      allOf:
+        - $ref: '#/components/schemas/NewPhrase'
+        - type: object
+          properties:
+            id:
+              description: The unique identifier for each phrase.
+              type: number
+            createdAt:
+              description: Date in UTC when the phrase was created.
+              schema:
+                type: string
+                format: date-time
+            modifiedAt:
+              description: Date in UTC when the phrase was last modified.
+              schema:
+                type: string
+                format: date-time
   responses:
-    400ErrorResponse:
-      description: Bad request. Invalid input parameters.
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/Error"
-    401SessionExpiredError:
-      description: Session expired. The user needs to re-authenticate.
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/Error"
-          example:
-            status: "401"
-            code: "SESSION_EXPIRED"
-            message: "Your session has expired. Please log in again."
-    404UserErrorResponse:
-      description: User not found.
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/Error"
     500InternalServerError:
       description: Internal server error.
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+            $ref: '#/components/schemas/Error'
+    404UserErrorResponse:
+      description: User not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    401SessionExpiredError:
+      description: Session expired. The user needs to re-authenticate.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            status: '401'
+            code: SESSION_EXPIRED
+            message: Your session has expired. Please log in again.
+    400BadRequestError:
+      description: Bad request. Invalid input parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

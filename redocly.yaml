@@ -1,6 +1,6 @@
 apis:
   core@v1:
-    root: swagger.yaml
+    root: openapi.yaml
     extends: [recommended]
     rules:
       info-license: off

@@ -1,0 +1,11 @@
+type: object
+properties:
+  status:
+    type: string
+    description: The HTTP status of the response.
+  code:
+    type: string
+    description: A status code that indicates the error type.
+  message:
+    type: string
+    description: A short description of the error.
