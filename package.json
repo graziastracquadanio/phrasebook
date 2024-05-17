@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "dev": "npm run --workspace web-app dev",
+    "pre-commit": "npm run --workspace web-app pre-commit",
+    "prepare": "husky"
+  },
+  "workspaces": [
+    "./web-app"
+  ],
+  "devDependencies": {
+    "husky": "^9.0.11"
+  }
+}
