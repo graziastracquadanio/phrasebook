@@ -1,10 +1,12 @@
 {
   "scripts": {
     "dev": "npm run --workspace web-app dev",
-    "pre-commit": "npm run --workspace web-app pre-commit",
+    "build-docs": "npm run --workspace openapi build-docs",
+    "pre-commit": "npm run --workspaces pre-commit",
     "prepare": "husky"
   },
   "workspaces": [
+    "./openapi",
     "./web-app"
   ],
   "devDependencies": {

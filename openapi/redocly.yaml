@@ -1,6 +1,6 @@
 apis:
   core@v1:
-    root: openapi/src/openapi.yaml
+    root: src/openapi.yaml
     extends: [recommended]
     rules:
       info-license: off
