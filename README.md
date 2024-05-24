@@ -79,6 +79,6 @@ so that I can review it.
 
 ## Wireframe v1.0
 
-[![](docs/images/wireframe.png "App wireframe")](https://app.moqups.com/YkcYUsHk3mhA7adK89hhK4qbxHpu5Tor/view/page/a880590a1?ui=0)
+[![](assets/wireframe.png "App wireframe")](https://app.moqups.com/YkcYUsHk3mhA7adK89hhK4qbxHpu5Tor/view/page/a880590a1?ui=0)
 
 The wireframe is available at [this link](https://app.moqups.com/YkcYUsHk3mhA7adK89hhK4qbxHpu5Tor/view/page/a880590a1?ui=0).
