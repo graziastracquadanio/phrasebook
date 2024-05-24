@@ -5,7 +5,7 @@ The Phrasebook app is a web-based application that enables users to access a cus
 
 ## API documentation
 
-The API documentation is available at [this link](https://graziastracquadanio.github.io/phrasebook/openapi/dist/).
+The API documentation is available at [this link](https://graziastracquadanio.github.io/phrasebook/dist/).
 
 ## Resources
 
